@@ -61,6 +61,14 @@ def generate_structures(structure, strain_lst):
     return {f"s_{i}": atoms_to_json_dict(atoms=s) for i, s in enumerate(structure_lst)}
 
 
+def scale_structure(structure, strain):
+    structure_strain = Atoms(**structure)
+    structure_strain.set_cell(
+        structure_strain.cell * strain ** (1 / 3), scale_atoms=True
+    )
+    return structure_strain
+
+
 def plot_energy_volume_curve(volume_lst, energy_lst):
     plt.plot(volume_lst, energy_lst)
     plt.xlabel("Volume")
